@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>单元测试 Vue 组件 - Vue 中文文档(@印记中文) https://docschina.org/</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - JavaScript 渐进式框架">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="alternate" hreflang="x-default" href="https://vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="zh" href="https://cn.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="ja" href="https://jp.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="ru" href="https://ru.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="ko" href="https://kr.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="pt-BR" href="https://br.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+    <link rel="alternate" hreflang="fr" href="https://fr.vuejs.org/v2/cookbook/unit-testing-vue-components.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="单元测试 Vue 组件 — Vue.js">
+    <meta property="og:description" content="Vue.js - JavaScript 渐进式框架">
+    <meta property="og:image" content="https://vue.docschina.org//images/logo.png">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="单元测试 Vue 组件 — Vue.js">
+    <meta name="twitter:description" content="Vue.js - JavaScript 渐进式框架">
+    <meta name="twitter:image" content="https://vue.docschina.org/images/logo.png">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/images/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/images/icons/ms-icon-144x144.png">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+
+    <meta name="msapplication-TileColor" content="#4fc08d">
+    <meta name="theme-color" content="#4fc08d">
+
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="manifest" href="/manifest.json">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- main page styles -->
+    <link rel="stylesheet" href="/css/page.css">
+
+    <!-- this needs to be loaded before guide's inline scripts -->
+    <script src="/js/vue.js"></script>
+    <script>window.PAGE_TYPE = "cookbook"</script>
+
+    <!-- baidu -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?ebacf70d9d85cfb235c83d600113ee3e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+  </head>
+  <body class="docs">
+    <div id="mobile-bar" >
+      <a class="menu-button"></a>
+      <a class="logo" href="/"></a>
+    </div>
+    <div id="header">
+  <a id="logo" href="/">
+    <img src="/images/logo.png">
+    <span>Vue.js</span>
+  </a>
+  <span style="overflow: hidden; display: inline-block; position: relative; top: 10px; left: 6px; font-size: 12px;">
+    2018.04.01 与 vuejs.org  同步<br>相关说明请点击<a target="_blank" href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" style="color: dodgerblue">这里</a>
+  </span>
+  <ul id="nav">
+    <li>
+  <form id="search-form">
+    <input type="text" id="search-query-nav" class="search-query st-default-search-input">
+  </form>
+</li>
+<li class="nav-dropdown-container learn">
+  <a class="nav-link current">学习</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/v2/guide/" class="nav-link">指南</a></li>
+      <li><a href="/v2/api/" class="nav-link">API</a></li>
+      <li><a href="/v2/style-guide/" class="nav-link">风格指南</a></li>
+      <li><a href="/v2/examples/" class="nav-link">示例</a></li>
+      <li><a href="/v2/cookbook/" class="nav-link current">Cookbook</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container ecosystem">
+  <a class="nav-link">生态系统</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>帮助</h4></li>
+    <li><ul>
+      <li><a href="https://forum.vuejs.org/" class="nav-link" target="_blank">论坛</a></li>
+      <li><a href="https://chat.vuejs.org/" class="nav-link" target="_blank">聊天室</a></li>
+    </ul></li>
+    <li><h4>工具</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://github.com/vuejs/vue-devtools" class="nav-link" target="_blank">Devtools</a></li>
+        <li><a href="https://vuejs-templates.github.io/webpack" class="nav-link" target="_blank">webpack 模板</a></li>
+        <li><a href="https://vue-loader.vuejs.org" class="nav-link" target="_blank">Vue loader</a></li>
+      </ul>
+    </li>
+    <li><h4>核心库</h4></li>
+    <li><ul>
+      <li><a href="https://router.vuejs.org/" class="nav-link" target="_blank">Vue router</a></li>
+      <li><a href="https://vuex.vuejs.org/" class="nav-link" target="_blank">Vuex</a></li>
+      <li><a href="https://ssr.vuejs.org/" class="nav-link" target="_blank">Vue 服务器端渲染</a></li>
+    </ul></li>
+    <li><h4>信息</h4></li>
+    <li><ul>
+      <li><a href="https://news.vuejs.org" class="nav-link" target="_blank">周刊</a></li>
+      <li><a href="https://github.com/vuejs/roadmap" class="nav-link" target="_blank">升级路线</a></li>
+      <li><a href="https://twitter.com/vuejs" class="nav-link" target="_blank">推特</a></li>
+      <li><a href="https://medium.com/the-vue-point" class="nav-link" target="_blank">博客</a></li>
+      <li><a href="https://vuejobs.com/?ref=vuejs" class="nav-link" target="_blank">工作</a></li>
+    </ul></li>
+    <li><h4>资源列表</h4></li>
+    <li><ul>
+      <li><a href="https://github.com/vuejs" class="nav-link" target="_blank">官方仓库</a></li>
+      <li><a href="https://curated.vuejs.org/" class="nav-link" target="_blank">Vue 优选</a></li>
+      <li><a href="https://github.com/vuejs/awesome-vue" class="nav-link" target="_blank">Vue 资源</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li>
+  <a href="/v2/guide/team.html" class="nav-link team">团队</a>
+</li>
+<li class="nav-dropdown-container support-vue">
+  <a href="/support-vuejs/" class="nav-link">支持 Vue</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/support-vuejs/#One-time-Donations" class="nav-link">单次捐助</a></li>
+      <li><a href="/support-vuejs/#Recurring-Pledges" class="nav-link">循环捐助</a></li>
+      <li><a href="https://vue.threadless.com" target="_blank" class="nav-link">T恤商店</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container language">
+  <a class="nav-link">多语言</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">English</a></li>
+    <li><a href="https://jp.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">日本語</a></li>
+    <li><a href="https://ru.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Русский</a></li>
+    <li><a href="https://kr.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">한국어</a></li>
+    <li><a href="https://br.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Português</a></li>
+    <li><a href="https://fr.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Français</a></li>
+    <li><a href="https://vi.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Tiếng Việt</a></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container contribute">
+  <a class="nav-link">参与贡献</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="/about/index.html" class="nav-link">公告说明</a></li>
+        <li><a href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" class="nav-link">更新记录</a></li>
+      </ul></li>
+  </ul>
+</li>
+<li class="nav-dropdown-container docschina">
+  <a class="nav-link" style="color: #e96901">印记中文</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="https://docschina.org/" target="_blank">印记中文首页</a></li>
+        <li><a href="https://docschina.org/team" target="_blank">加入我们翻译文档</a></li>
+        <li><a href="https://webpack.docschina.org/" target="_blank">webpack 中文文档</a></li>
+        <li><a href="https://parceljs.docschina.org/" target="_blank">Parcel.js 中文文档</a></li>
+        <li><a href="https://doc.react-china.org/" target="_blank">React.js 中文文档</a></li>
+        <li><a href="http://nodejs.cn/" target="_blank">Node.js 中文文档</a></li>
+      </ul></li>
+    <li>
+  </ul>
+</li>
+
+<li>
+
+  </ul>
+</div>
+
+    
+      <div id="main" class="fix-sidebar">
+        
+          
+  <div class="sidebar">
+  <div class="sidebar-inner">
+    <ul class="main-menu">
+      <li>
+  <form id="search-form">
+    <input type="text" id="search-query-sidebar" class="search-query st-default-search-input">
+  </form>
+</li>
+<li class="nav-dropdown-container learn">
+  <a class="nav-link current">学习</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/v2/guide/" class="nav-link">指南</a></li>
+      <li><a href="/v2/api/" class="nav-link">API</a></li>
+      <li><a href="/v2/style-guide/" class="nav-link">风格指南</a></li>
+      <li><a href="/v2/examples/" class="nav-link">示例</a></li>
+      <li><a href="/v2/cookbook/" class="nav-link current">Cookbook</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container ecosystem">
+  <a class="nav-link">生态系统</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>帮助</h4></li>
+    <li><ul>
+      <li><a href="https://forum.vuejs.org/" class="nav-link" target="_blank">论坛</a></li>
+      <li><a href="https://chat.vuejs.org/" class="nav-link" target="_blank">聊天室</a></li>
+    </ul></li>
+    <li><h4>工具</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://github.com/vuejs/vue-devtools" class="nav-link" target="_blank">Devtools</a></li>
+        <li><a href="https://vuejs-templates.github.io/webpack" class="nav-link" target="_blank">webpack 模板</a></li>
+        <li><a href="https://vue-loader.vuejs.org" class="nav-link" target="_blank">Vue loader</a></li>
+      </ul>
+    </li>
+    <li><h4>核心库</h4></li>
+    <li><ul>
+      <li><a href="https://router.vuejs.org/" class="nav-link" target="_blank">Vue router</a></li>
+      <li><a href="https://vuex.vuejs.org/" class="nav-link" target="_blank">Vuex</a></li>
+      <li><a href="https://ssr.vuejs.org/" class="nav-link" target="_blank">Vue 服务器端渲染</a></li>
+    </ul></li>
+    <li><h4>信息</h4></li>
+    <li><ul>
+      <li><a href="https://news.vuejs.org" class="nav-link" target="_blank">周刊</a></li>
+      <li><a href="https://github.com/vuejs/roadmap" class="nav-link" target="_blank">升级路线</a></li>
+      <li><a href="https://twitter.com/vuejs" class="nav-link" target="_blank">推特</a></li>
+      <li><a href="https://medium.com/the-vue-point" class="nav-link" target="_blank">博客</a></li>
+      <li><a href="https://vuejobs.com/?ref=vuejs" class="nav-link" target="_blank">工作</a></li>
+    </ul></li>
+    <li><h4>资源列表</h4></li>
+    <li><ul>
+      <li><a href="https://github.com/vuejs" class="nav-link" target="_blank">官方仓库</a></li>
+      <li><a href="https://curated.vuejs.org/" class="nav-link" target="_blank">Vue 优选</a></li>
+      <li><a href="https://github.com/vuejs/awesome-vue" class="nav-link" target="_blank">Vue 资源</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li>
+  <a href="/v2/guide/team.html" class="nav-link team">团队</a>
+</li>
+<li class="nav-dropdown-container support-vue">
+  <a href="/support-vuejs/" class="nav-link">支持 Vue</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/support-vuejs/#One-time-Donations" class="nav-link">单次捐助</a></li>
+      <li><a href="/support-vuejs/#Recurring-Pledges" class="nav-link">循环捐助</a></li>
+      <li><a href="https://vue.threadless.com" target="_blank" class="nav-link">T恤商店</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container language">
+  <a class="nav-link">多语言</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">English</a></li>
+    <li><a href="https://jp.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">日本語</a></li>
+    <li><a href="https://ru.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Русский</a></li>
+    <li><a href="https://kr.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">한국어</a></li>
+    <li><a href="https://br.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Português</a></li>
+    <li><a href="https://fr.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Français</a></li>
+    <li><a href="https://vi.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="nav-link" target="_blank">Tiếng Việt</a></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container contribute">
+  <a class="nav-link">参与贡献</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="/about/index.html" class="nav-link">公告说明</a></li>
+        <li><a href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" class="nav-link">更新记录</a></li>
+      </ul></li>
+  </ul>
+</li>
+<li class="nav-dropdown-container docschina">
+  <a class="nav-link" style="color: #e96901">印记中文</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="https://docschina.org/" target="_blank">印记中文首页</a></li>
+        <li><a href="https://docschina.org/team" target="_blank">加入我们翻译文档</a></li>
+        <li><a href="https://webpack.docschina.org/" target="_blank">webpack 中文文档</a></li>
+        <li><a href="https://parceljs.docschina.org/" target="_blank">Parcel.js 中文文档</a></li>
+        <li><a href="https://doc.react-china.org/" target="_blank">React.js 中文文档</a></li>
+        <li><a href="http://nodejs.cn/" target="_blank">Node.js 中文文档</a></li>
+      </ul></li>
+    <li>
+  </ul>
+</li>
+
+<li>
+
+    </ul>
+    <div class="list">
+      <div id="sidebar-sponsors-special">
+  <div class="main-sponsor">
+    <span>特别赞助</span>
+    <div>
+    <a href="https://stdlib.com" target="_blank" class="logo">
+      <img src="/images/stdlib.png">
+    </a>
+    <a href="https://www.bitsrc.io/?utm_source=vue&utm_medium=vue&utm_campaign=vue&utm_term=vue&utm_content=vue" target="_blank" class="logo">
+      <img src="/images/bit-wide.png">
+    </a>
+    </div>
+  </div>
+</div>
+
+<div id="sidebar-sponsors-platinum">
+  <div class="main-sponsor">
+    <span>Patreon 赞助</span>
+    <div>
+    <a href="http://tooltwist.com/" target="_blank" class="logo">
+      <img src="/images/tooltwist.png">
+    </a>
+    <a href="https://vueschool.io/?utm_source=Vuejs.org&utm_medium=Banner&utm_campaign=Sponsored%20Banner&utm_content=V1" target="_blank" class="logo">
+      <img src="/images/vueschool.png">
+    </a>
+    <a href="https://vehikl.com/" target="_blank" class="logo">
+      <img src="/images/vehikl.png">
+    </a>
+    </div>
+  </div>
+  <a class="become-backer" href="/support-vuejs">
+    成为赞助者
+  </a>
+</div>
+
+      <h2>
+        
+        Cookbook<sup class="beta">beta</sup>
+        
+      </h2>
+      <ul class="menu-root">
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/index.html" class="sidebar-link">Introduction</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/adding-instance-properties.html" class="sidebar-link">Adding Instance Properties</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/form-validation.html" class="sidebar-link">Form Validation</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/editable-svg-icons.html" class="sidebar-link">Editable SVG Icon Systems</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/serverless-blog.html" class="sidebar-link">Create a CMS-Powered Blog</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/unit-testing-vue-components.html" class="sidebar-link current">单元测试 Vue 组件</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/creating-custom-scroll-directives.html" class="sidebar-link">Creating Custom Scroll Directives</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/debugging-in-vscode.html" class="sidebar-link">Debugging in VS Code and Chrome</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="/v2/cookbook/using-axios-to-consume-apis.html" class="sidebar-link">Using Axios to Consume APIs</a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="content cookbook with-sidebar ">
+  
+    
+      <!--<div id="ad">
+  <script>
+    (function () {
+      var s = document.createElement('script')
+      s.setAttribute('async', '')
+      s.src = '//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=vuejs'
+      s.id = '_carbonads_js'
+      document.getElementById('ad').appendChild(s)
+    })()
+  </script>
+</div>
+-->
+    
+  
+  
+    <h1>单元测试 Vue 组件</h1>
+  
+  
+    <h2 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h2><p>单元测试是软件开发的基础部分。单元测试孤立地执行最小的代码单元，以便增加新功能的易用性和追踪错误。通过 Vue <a href="../guide/single-file-components.html">单文件组件</a>，可以直接为独立的组件编写单元测试。这使你可以在不破坏现有功能的基础上，放心地开发新功能，并帮助其他开发人员了解你的组件功能。</p>
+<p>这个简单示例，测试是否渲染一些文本：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-if</span>=<span class="string">"error"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">"error"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      &#123;&#123; error &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  name: <span class="string">'Hello'</span>,</span></span><br><span class="line"><span class="undefined">  data () &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      username: <span class="string">''</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  computed: &#123;</span></span><br><span class="line"><span class="undefined">    error () &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> <span class="keyword">this</span>.username.trim().length &lt; <span class="number">7</span></span></span><br><span class="line"><span class="javascript">        ? <span class="string">'请输入稍长一些的 username'</span></span></span><br><span class="line"><span class="javascript">        : <span class="string">''</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallow &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line">test(<span class="string">'Foo'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 渲染组件</span></span><br><span class="line">  <span class="keyword">const</span> wrapper = shallow(Hello)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 应当的实现效果是，去除两侧空格后，不允许 `username` 少于 7 个字符</span></span><br><span class="line">  wrapper.setData(&#123; <span class="attr">username</span>: <span class="string">' '</span>.repeat(<span class="number">7</span>) &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 断言 error 被渲染</span></span><br><span class="line">  expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBe(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将 username 修改为足够长度</span></span><br><span class="line">  wrapper.setData(&#123;</span><br><span class="line">    username: <span class="string">'Lachlan'</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 断言 error 消失</span></span><br><span class="line">  expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBe(<span class="literal">false</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的代码片段，展示了如何根据 username 的长度，测试错误消息是否被渲染。它演示了单元测试 Vue 组件的一般思路：渲染组件，然后断言标签内容与组件状态对应。</p>
+<h2 id="为什么要做测试？"><a href="#为什么要做测试？" class="headerlink" title="为什么要做测试？"></a>为什么要做测试？</h2><p>组件单元测试有很多好处：</p>
+<ul>
+<li>提供有关组件内部机制的文档</li>
+<li>节省手动测试时间</li>
+<li>减少新功能中的错误</li>
+<li>改进设计</li>
+<li>促进重构</li>
+</ul>
+<p>自动化测试，有助于大型开发团队维护复杂的代码库。</p>
+<h4 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h4><p><a href="https://github.com/vuejs/vue-test-utils" target="_blank" rel="noopener">Vue Test Utils</a> 是用于辅助单元测试 Vue 组件的官方库。<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">vue-cli</a> <code>webpack</code> template 中带有 Karma 或 Jest，都良好支持测试运行器，Vue Test Utils 文档中的<a href="https://vue-test-utils.vuejs.org/zh-cn/guides/" target="_blank" rel="noopener">指南</a>也可以参考。</p>
+<h2 id="现实示例"><a href="#现实示例" class="headerlink" title="现实示例"></a>现实示例</h2><p>单元测试应该：</p>
+<ul>
+<li>快速运行</li>
+<li>简单易懂</li>
+<li>只测试<em>单个工作单元</em></li>
+</ul>
+<p>让我们继续构建前面的示例，同时引入一个 <a href="https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)" target="_blank" rel="noopener">工厂函数(factory function)</a> 的概念，以使我们的测试更加紧凑和可读。该组件应该：</p>
+<ul>
+<li>显示 ‘Welcome to the Vue.js cookbook’ 的问候。</li>
+<li>提示用户输入 username</li>
+<li>输入的 username 少于 7 个字母，显示 error</li>
+</ul>
+<p>我们先来看组件代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"message"</span>&gt;</span></span><br><span class="line">      &#123;&#123; message &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    输入你的 username：<span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-if</span>=<span class="string">"error"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">"error"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      请输入至少 7 个字母的 username</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  name: <span class="string">'Foo'</span>,</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  data () &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      message: <span class="string">'Welcome to the Vue.js cookbook'</span>,</span></span><br><span class="line"><span class="javascript">      username: <span class="string">''</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  computed: &#123;</span></span><br><span class="line"><span class="undefined">    error () &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> <span class="keyword">this</span>.username.trim().length &lt; <span class="number">7</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们应该测试的是：</p>
+<ul>
+<li><code>message</code> 正确渲染了吗？</li>
+<li>如果 <code>error</code> 是 <code>true</code>，<code>&lt;div class=&quot;error&quot;&gt;</code> 应该存在</li>
+<li>如果 <code>error</code> 是 <code>false</code>，<code>&lt;div class=&quot;error&quot;&gt;</code> 不应该存在</li>
+</ul>
+<p>然后，在测试代码中，我们先来尝试：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallow &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Foo'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'renders a message and responds correctly to user input'</span>, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> wrapper = shallow(Foo, &#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      message: <span class="string">'Hello World'</span>,</span><br><span class="line">      username: <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 查看 message 是否渲染</span></span><br><span class="line">  expect(wrapper.find(<span class="string">'.message'</span>).text()).toEqual(<span class="string">'Hello World'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 断言 error 已经渲染</span></span><br><span class="line">  expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBeTruthy()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 修改 `username`，然后断言 error 不再渲染</span></span><br><span class="line">  wrapper.setData(&#123; <span class="attr">username</span>: <span class="string">'Lachlan'</span> &#125;)</span><br><span class="line">  expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBeFalsy()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的示例中有一些问题：</p>
+<ul>
+<li>单个测试，却在对不同的事物做出断言</li>
+<li>很难说出组件处于哪些不同的状态，以及应该渲染什么结果</li>
+</ul>
+<p>通过以下方式改进了测试：</p>
+<ul>
+<li>只在每个 <code>it</code> 块中做单个断言</li>
+<li>具有简短明确的测试说明</li>
+<li>只提供测试所需的最低限度的数据</li>
+<li>重构重复逻辑（创建 <code>wrapper</code> 和设置 <code>username</code> 变量）到工厂函数中</li>
+</ul>
+<p><em>Updated test</em>:<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; shallow &#125; <span class="keyword">from</span> <span class="string">'@vue/test-utils'</span></span><br><span class="line"><span class="keyword">import</span> Foo <span class="keyword">from</span> <span class="string">'./Foo'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> factory = <span class="function">(<span class="params">values = &#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> shallow(Foo, &#123;</span><br><span class="line">    data: &#123; ...values  &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Foo'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'renders a welcome message'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> wrapper = factory()</span><br><span class="line"></span><br><span class="line">    expect(wrapper.find(<span class="string">'.message'</span>).text()).toEqual(<span class="string">"Welcome to the Vue.js cookbook"</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'renders an error when username is less than 7 characters'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> wrapper = factory(&#123; <span class="attr">username</span>: <span class="string">''</span>  &#125;)</span><br><span class="line"></span><br><span class="line">    expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBeTruthy()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'renders an error when username is whitespace'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> wrapper = factory(&#123; <span class="attr">username</span>: <span class="string">' '</span>.repeat(<span class="number">7</span>) &#125;)</span><br><span class="line"></span><br><span class="line">    expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBeTruthy()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'does not render an error when username is 7 characters or more'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> wrapper = factory(&#123; <span class="attr">username</span>: <span class="string">'Lachlan'</span>  &#125;)</span><br><span class="line"></span><br><span class="line">    expect(wrapper.find(<span class="string">'.error'</span>).exists()).toBeFalsy()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>注意事项：</p>
+<p>在代码顶部，我们声明了工厂函数，将 <code>values</code> 对象合并到 <code>data</code> 中，然后返回一个新的 <code>wrapper</code> 实例。这样，我们不需要在每个测试中都重复写 <code>const wrapper = shallow(Foo)</code>。另一个较大的好处是，如果是你可能想要在每个测试中模拟或存根的组件，而这个组件是具有一个 method 方法或 computed 计算属性的复杂组件，现在则只需要声明一次。</p>
+<h2 id="附加上下文"><a href="#附加上下文" class="headerlink" title="附加上下文"></a>附加上下文</h2><p>上面的测试示例比较简单，但实际上 Vue 组件通常还有其他需要测试的行为，例如：</p>
+<ul>
+<li>进行 API 调用</li>
+<li>通过 <code>Vuex</code> store 提交(commit)或分发(dispatch) mutations 或 actions</li>
+<li>测试交互</li>
+</ul>
+<p>在 Vue Test Utils <a href="https://vue-test-utils.vuejs.org/en/guides/" target="_blank" rel="noopener">指南</a>中，展示了这些测试行为的更多完整示例。</p>
+<p>Vue Test Utils 和巨大的 JavaScript 生态系统提供了大量的工具，来促进达到接近 100％ 测试覆盖率。不过，单元测试只是测试金字塔的一部分。还有一些其他类型的测试，包括 e2e（end to end - 端到端）测试和快照测试。单元测试是最细度和最基本的测试 - 他们对最小工作单元做出断言，将单个组件的每个部分隔离开。</p>
+<p>快照测试(snapshot test)，会保存 Vue 组件的标签，并与每次测试运行时生成的新标签进行比较。如果有变化，开发人员会得到通知，并可以确定更改是符合意图（组件已经更新）还是出于意外（组件行为不正确）。</p>
+<p>端到端测试(end to end)，需要确保许多组件良好地交互在一起。这位于更高层次。一些示例可能会测试到用户是否可以注册、登录和修改其用户名。这些要比单元测试或快照测试慢得多。</p>
+<p>单元测试，在开发过程中非常有用，既可以帮助开发人员考虑如何设计一个组件，又可以帮助开发人员重构现有组件，并且在每次修改代码时都不断地运行。</p>
+<p>处于上层的测试，例如端到端测试，运行速度要慢得多。这些通常需要运行预先部署，以确保系统的每个部分正确地一起运行。</p>
+<p>关于测试 Vue 组件的更多信息，可以在 <a href="https://www.manning.com/books/testing-vuejs-applications" target="_blank" rel="noopener">测试 Vue.js 应用程序</a> 中学习，是由核心团队成员 <a href="https://eddyerburgh.me/" target="_blank" rel="noopener">Edd Yerburgh</a> 编写。</p>
+<h2 id="何时我们无须进行单元测试"><a href="#何时我们无须进行单元测试" class="headerlink" title="何时我们无须进行单元测试"></a>何时我们无须进行单元测试</h2><p>单元测试是所有重度应用程序的重要组成部分。首先，当应用程序的构想不明确时，单元测试可能会减缓开发速度，然而，一旦确立出构想，并且有了与应用程序交互的真实用户，单元测试（以及其他类型的自动化测试）可以保证代码库是可维护的和可扩展的。</p>
+<hr>
+<blockquote>
+<p>原文：<a href="https://vuejs.org/v2/cookbook/unit-testing-vue-components.html" target="_blank" rel="noopener">https://vuejs.org/v2/cookbook/unit-testing-vue-components.html</a></p>
+</blockquote>
+<hr>
+
+  
+  
+  <div class="footer">
+      <script src="//m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+<div class="bsa-cpc"></div>
+<script>
+  (function(){
+    if(typeof _bsa !== 'undefined' && _bsa) {
+    _bsa.init('default', 'CKYD62QM', 'placement:vuejsorg', {
+      target: '.bsa-cpc',
+      align: 'horizontal',
+      disable_css: 'true'
+    });
+      }
+  })();
+</script>
+
+    发现错误？想参与编辑？
+    <a href="https://github.com/docschina/vuejs.org/blob/cn/src/v2/cookbook/unit-testing-vue-components.md" target="_blank">
+      在 GitHub 上编辑此页！
+    </a>
+  </div>
+</div>
+
+        
+      </div>
+      <script src="/js/smooth-scroll.min.js"></script>
+    
+
+    <!-- main custom script for sidebars, version selects etc. -->
+    <script src="/js/css.escape.js"></script>
+    <script src="/js/common.js"></script>
+
+    <!-- search -->
+    <link href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/search.css">
+    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" type="text/javascript"></script>
+    <script>
+    [
+      '#search-query-nav',
+      '#search-query-sidebar',
+      '#search-query-menu'
+    ].forEach(function (selector) {
+      if (!document.querySelector(selector)) return
+      // search index defaults to v2
+      docsearch({
+      apiKey: '528a52bb98fa94e699a32180b5e72cac',
+      indexName: 'vuefe',
+      inputSelector: selector,
+      debug: false
+      })
+    })
+    </script>
+
+    <!-- fastclick -->
+    <script src="//lib.baomitu.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      FastClick.attach(document.body)
+    }, false)
+    </script>
+  </body>
+</html>

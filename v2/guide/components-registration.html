@@ -1,0 +1,1146 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>组件注册 - Vue 中文文档(@印记中文) https://docschina.org/</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - JavaScript 渐进式框架">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="alternate" hreflang="x-default" href="https://vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="zh" href="https://cn.vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="ja" href="https://jp.vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="ru" href="https://ru.vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="ko" href="https://kr.vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="pt-BR" href="https://br.vuejs.org/v2/guide/components-registration.html">
+    <link rel="alternate" hreflang="fr" href="https://fr.vuejs.org/v2/guide/components-registration.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="组件注册 — Vue.js">
+    <meta property="og:description" content="Vue.js - JavaScript 渐进式框架">
+    <meta property="og:image" content="https://vue.docschina.org//images/logo.png">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="组件注册 — Vue.js">
+    <meta name="twitter:description" content="Vue.js - JavaScript 渐进式框架">
+    <meta name="twitter:image" content="https://vue.docschina.org/images/logo.png">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/images/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/images/icons/ms-icon-144x144.png">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+
+    <meta name="msapplication-TileColor" content="#4fc08d">
+    <meta name="theme-color" content="#4fc08d">
+
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="manifest" href="/manifest.json">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- main page styles -->
+    <link rel="stylesheet" href="/css/page.css">
+
+    <!-- this needs to be loaded before guide's inline scripts -->
+    <script src="/js/vue.js"></script>
+    <script>window.PAGE_TYPE = "guide"</script>
+
+    <!-- baidu -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?ebacf70d9d85cfb235c83d600113ee3e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+  </head>
+  <body class="docs">
+    <div id="mobile-bar" >
+      <a class="menu-button"></a>
+      <a class="logo" href="/"></a>
+    </div>
+    <div id="header">
+  <a id="logo" href="/">
+    <img src="/images/logo.png">
+    <span>Vue.js</span>
+  </a>
+  <span style="overflow: hidden; display: inline-block; position: relative; top: 10px; left: 6px; font-size: 12px;">
+    2018.04.01 与 vuejs.org  同步<br>相关说明请点击<a target="_blank" href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" style="color: dodgerblue">这里</a>
+  </span>
+  <ul id="nav">
+    <li>
+  <form id="search-form">
+    <input type="text" id="search-query-nav" class="search-query st-default-search-input">
+  </form>
+</li>
+<li class="nav-dropdown-container learn">
+  <a class="nav-link current">学习</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/v2/guide/" class="nav-link current">指南</a></li>
+      <li><a href="/v2/api/" class="nav-link">API</a></li>
+      <li><a href="/v2/style-guide/" class="nav-link">风格指南</a></li>
+      <li><a href="/v2/examples/" class="nav-link">示例</a></li>
+      <li><a href="/v2/cookbook/" class="nav-link">Cookbook</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container ecosystem">
+  <a class="nav-link">生态系统</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>帮助</h4></li>
+    <li><ul>
+      <li><a href="https://forum.vuejs.org/" class="nav-link" target="_blank">论坛</a></li>
+      <li><a href="https://chat.vuejs.org/" class="nav-link" target="_blank">聊天室</a></li>
+    </ul></li>
+    <li><h4>工具</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://github.com/vuejs/vue-devtools" class="nav-link" target="_blank">Devtools</a></li>
+        <li><a href="https://vuejs-templates.github.io/webpack" class="nav-link" target="_blank">webpack 模板</a></li>
+        <li><a href="https://vue-loader.vuejs.org" class="nav-link" target="_blank">Vue loader</a></li>
+      </ul>
+    </li>
+    <li><h4>核心库</h4></li>
+    <li><ul>
+      <li><a href="https://router.vuejs.org/" class="nav-link" target="_blank">Vue router</a></li>
+      <li><a href="https://vuex.vuejs.org/" class="nav-link" target="_blank">Vuex</a></li>
+      <li><a href="https://ssr.vuejs.org/" class="nav-link" target="_blank">Vue 服务器端渲染</a></li>
+    </ul></li>
+    <li><h4>信息</h4></li>
+    <li><ul>
+      <li><a href="https://news.vuejs.org" class="nav-link" target="_blank">周刊</a></li>
+      <li><a href="https://github.com/vuejs/roadmap" class="nav-link" target="_blank">升级路线</a></li>
+      <li><a href="https://twitter.com/vuejs" class="nav-link" target="_blank">推特</a></li>
+      <li><a href="https://medium.com/the-vue-point" class="nav-link" target="_blank">博客</a></li>
+      <li><a href="https://vuejobs.com/?ref=vuejs" class="nav-link" target="_blank">工作</a></li>
+    </ul></li>
+    <li><h4>资源列表</h4></li>
+    <li><ul>
+      <li><a href="https://github.com/vuejs" class="nav-link" target="_blank">官方仓库</a></li>
+      <li><a href="https://curated.vuejs.org/" class="nav-link" target="_blank">Vue 优选</a></li>
+      <li><a href="https://github.com/vuejs/awesome-vue" class="nav-link" target="_blank">Vue 资源</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li>
+  <a href="/v2/guide/team.html" class="nav-link team">团队</a>
+</li>
+<li class="nav-dropdown-container support-vue">
+  <a href="/support-vuejs/" class="nav-link">支持 Vue</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/support-vuejs/#One-time-Donations" class="nav-link">单次捐助</a></li>
+      <li><a href="/support-vuejs/#Recurring-Pledges" class="nav-link">循环捐助</a></li>
+      <li><a href="https://vue.threadless.com" target="_blank" class="nav-link">T恤商店</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container language">
+  <a class="nav-link">多语言</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">English</a></li>
+    <li><a href="https://jp.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">日本語</a></li>
+    <li><a href="https://ru.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Русский</a></li>
+    <li><a href="https://kr.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">한국어</a></li>
+    <li><a href="https://br.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Português</a></li>
+    <li><a href="https://fr.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Français</a></li>
+    <li><a href="https://vi.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Tiếng Việt</a></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container contribute">
+  <a class="nav-link">参与贡献</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="/about/index.html" class="nav-link">公告说明</a></li>
+        <li><a href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" class="nav-link">更新记录</a></li>
+      </ul></li>
+  </ul>
+</li>
+<li class="nav-dropdown-container docschina">
+  <a class="nav-link" style="color: #e96901">印记中文</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="https://docschina.org/" target="_blank">印记中文首页</a></li>
+        <li><a href="https://docschina.org/team" target="_blank">加入我们翻译文档</a></li>
+        <li><a href="https://webpack.docschina.org/" target="_blank">webpack 中文文档</a></li>
+        <li><a href="https://parceljs.docschina.org/" target="_blank">Parcel.js 中文文档</a></li>
+        <li><a href="https://doc.react-china.org/" target="_blank">React.js 中文文档</a></li>
+        <li><a href="http://nodejs.cn/" target="_blank">Node.js 中文文档</a></li>
+      </ul></li>
+    <li>
+  </ul>
+</li>
+
+<li>
+
+  </ul>
+</div>
+
+    
+      <div id="main" class="fix-sidebar">
+        
+          
+  <div class="sidebar">
+  <div class="sidebar-inner">
+    <ul class="main-menu">
+      <li>
+  <form id="search-form">
+    <input type="text" id="search-query-sidebar" class="search-query st-default-search-input">
+  </form>
+</li>
+<li class="nav-dropdown-container learn">
+  <a class="nav-link current">学习</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/v2/guide/" class="nav-link current">指南</a></li>
+      <li><a href="/v2/api/" class="nav-link">API</a></li>
+      <li><a href="/v2/style-guide/" class="nav-link">风格指南</a></li>
+      <li><a href="/v2/examples/" class="nav-link">示例</a></li>
+      <li><a href="/v2/cookbook/" class="nav-link">Cookbook</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container ecosystem">
+  <a class="nav-link">生态系统</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>帮助</h4></li>
+    <li><ul>
+      <li><a href="https://forum.vuejs.org/" class="nav-link" target="_blank">论坛</a></li>
+      <li><a href="https://chat.vuejs.org/" class="nav-link" target="_blank">聊天室</a></li>
+    </ul></li>
+    <li><h4>工具</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://github.com/vuejs/vue-devtools" class="nav-link" target="_blank">Devtools</a></li>
+        <li><a href="https://vuejs-templates.github.io/webpack" class="nav-link" target="_blank">webpack 模板</a></li>
+        <li><a href="https://vue-loader.vuejs.org" class="nav-link" target="_blank">Vue loader</a></li>
+      </ul>
+    </li>
+    <li><h4>核心库</h4></li>
+    <li><ul>
+      <li><a href="https://router.vuejs.org/" class="nav-link" target="_blank">Vue router</a></li>
+      <li><a href="https://vuex.vuejs.org/" class="nav-link" target="_blank">Vuex</a></li>
+      <li><a href="https://ssr.vuejs.org/" class="nav-link" target="_blank">Vue 服务器端渲染</a></li>
+    </ul></li>
+    <li><h4>信息</h4></li>
+    <li><ul>
+      <li><a href="https://news.vuejs.org" class="nav-link" target="_blank">周刊</a></li>
+      <li><a href="https://github.com/vuejs/roadmap" class="nav-link" target="_blank">升级路线</a></li>
+      <li><a href="https://twitter.com/vuejs" class="nav-link" target="_blank">推特</a></li>
+      <li><a href="https://medium.com/the-vue-point" class="nav-link" target="_blank">博客</a></li>
+      <li><a href="https://vuejobs.com/?ref=vuejs" class="nav-link" target="_blank">工作</a></li>
+    </ul></li>
+    <li><h4>资源列表</h4></li>
+    <li><ul>
+      <li><a href="https://github.com/vuejs" class="nav-link" target="_blank">官方仓库</a></li>
+      <li><a href="https://curated.vuejs.org/" class="nav-link" target="_blank">Vue 优选</a></li>
+      <li><a href="https://github.com/vuejs/awesome-vue" class="nav-link" target="_blank">Vue 资源</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li>
+  <a href="/v2/guide/team.html" class="nav-link team">团队</a>
+</li>
+<li class="nav-dropdown-container support-vue">
+  <a href="/support-vuejs/" class="nav-link">支持 Vue</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+      <li><a href="/support-vuejs/#One-time-Donations" class="nav-link">单次捐助</a></li>
+      <li><a href="/support-vuejs/#Recurring-Pledges" class="nav-link">循环捐助</a></li>
+      <li><a href="https://vue.threadless.com" target="_blank" class="nav-link">T恤商店</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container language">
+  <a class="nav-link">多语言</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">English</a></li>
+    <li><a href="https://jp.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">日本語</a></li>
+    <li><a href="https://ru.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Русский</a></li>
+    <li><a href="https://kr.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">한국어</a></li>
+    <li><a href="https://br.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Português</a></li>
+    <li><a href="https://fr.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Français</a></li>
+    <li><a href="https://vi.vuejs.org/v2/guide/components-registration.html" class="nav-link" target="_blank">Tiếng Việt</a></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container contribute">
+  <a class="nav-link">参与贡献</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="/about/index.html" class="nav-link">公告说明</a></li>
+        <li><a href="https://github.com/docschina/vuejs.org/blob/cn/UPDATE.md" class="nav-link">更新记录</a></li>
+      </ul></li>
+  </ul>
+</li>
+<li class="nav-dropdown-container docschina">
+  <a class="nav-link" style="color: #e96901">印记中文</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><ul>
+        <li><a href="https://docschina.org/" target="_blank">印记中文首页</a></li>
+        <li><a href="https://docschina.org/team" target="_blank">加入我们翻译文档</a></li>
+        <li><a href="https://webpack.docschina.org/" target="_blank">webpack 中文文档</a></li>
+        <li><a href="https://parceljs.docschina.org/" target="_blank">Parcel.js 中文文档</a></li>
+        <li><a href="https://doc.react-china.org/" target="_blank">React.js 中文文档</a></li>
+        <li><a href="http://nodejs.cn/" target="_blank">Node.js 中文文档</a></li>
+      </ul></li>
+    <li>
+  </ul>
+</li>
+
+<li>
+
+    </ul>
+    <div class="list">
+      <div id="sidebar-sponsors-special">
+  <div class="main-sponsor">
+    <span>特别赞助</span>
+    <div>
+    <a href="https://stdlib.com" target="_blank" class="logo">
+      <img src="/images/stdlib.png">
+    </a>
+    <a href="https://www.bitsrc.io/?utm_source=vue&utm_medium=vue&utm_campaign=vue&utm_term=vue&utm_content=vue" target="_blank" class="logo">
+      <img src="/images/bit-wide.png">
+    </a>
+    </div>
+  </div>
+</div>
+
+<div id="sidebar-sponsors-platinum">
+  <div class="main-sponsor">
+    <span>Patreon 赞助</span>
+    <div>
+    <a href="http://tooltwist.com/" target="_blank" class="logo">
+      <img src="/images/tooltwist.png">
+    </a>
+    <a href="https://vueschool.io/?utm_source=Vuejs.org&utm_medium=Banner&utm_campaign=Sponsored%20Banner&utm_content=V1" target="_blank" class="logo">
+      <img src="/images/vueschool.png">
+    </a>
+    <a href="https://vehikl.com/" target="_blank" class="logo">
+      <img src="/images/vehikl.png">
+    </a>
+    </div>
+  </div>
+  <a class="become-backer" href="/support-vuejs">
+    成为赞助者
+  </a>
+</div>
+
+      <h2>
+        
+        指南
+        
+          <select class="version-select">
+            <option value="SELF" selected>2.x</option>
+            <option value="v1">1.0</option>
+            <option value="012">0.12</option>
+            <option value="011">0.11</option>
+          </select>
+        
+      </h2>
+      <ul class="menu-root">
+  
+    
+    
+      
+        <li><h3>基础概要</h3></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/installation.html" class="sidebar-link">安装</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/index.html" class="sidebar-link">介绍</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/instance.html" class="sidebar-link">Vue 实例</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/syntax.html" class="sidebar-link">模板语法</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/computed.html" class="sidebar-link">computed 属性和 watcher</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/class-and-style.html" class="sidebar-link">class 和 style 绑定</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/conditional.html" class="sidebar-link">根据条件进行渲染</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/list.html" class="sidebar-link">列表渲染</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/events.html" class="sidebar-link">事件处理</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/forms.html" class="sidebar-link">表单 input 绑定</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components.html" class="sidebar-link">组件基础</a>
+    </li>
+  
+    
+    
+      
+      
+      
+        <li><h3>过渡 & 动画</h3></li>
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/transitions.html" class="sidebar-link">进入、离开和列表的过渡</a>
+    </li>
+  
+    
+    
+      
+      
+        <li><h3>深入组件</h3></li>
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-registration.html" class="sidebar-link current">组件注册</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-props.html" class="sidebar-link">props</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-custom-events.html" class="sidebar-link">自定义事件</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-slots.html" class="sidebar-link">slot</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-dynamic-async.html" class="sidebar-link">动态组件和异步组件</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/components-edge-cases.html" class="sidebar-link">Handling Edge Cases</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/transitioning-state.html" class="sidebar-link">状态间的过渡</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+        <li><h3>可重用 & 合成</h3></li>
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/mixins.html" class="sidebar-link">mixin</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/custom-directive.html" class="sidebar-link">自定义指令</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/render-function.html" class="sidebar-link">render 函数 & jsx</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/plugins.html" class="sidebar-link">插件</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/filters.html" class="sidebar-link">过滤器</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+        <li><h3>工具</h3></li>
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/deployment.html" class="sidebar-link">生产环境部署</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/single-file-components.html" class="sidebar-link">单文件组件</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/unit-testing.html" class="sidebar-link">单元测试</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/typescript.html" class="sidebar-link">TypeScript 支持</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+        <li><h3>扩展升级</h3></li>
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/routing.html" class="sidebar-link">路由</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/state-management.html" class="sidebar-link">状态管理</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/ssr.html" class="sidebar-link">服务端渲染</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+        <li><h3>内部原理</h3></li>
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/reactivity.html" class="sidebar-link">深入响应式原理</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><h3>升级迁移</h3></li>
+      
+      
+    
+    <li>
+      <a href="/v2/guide/migration.html" class="sidebar-link">从 Vue 1.x 迁移</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/migration-vue-router.html" class="sidebar-link">从 Vue Router 0.7.x 迁移</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/migration-vuex.html" class="sidebar-link">从 Vuex 0.6.x 迁移到 1.0</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><h3>其他更多</h3></li>
+      
+    
+    <li>
+      <a href="/v2/guide/comparison.html" class="sidebar-link">对比其他框架</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/join.html" class="sidebar-link">加入 Vue.js 社区</a>
+    </li>
+  
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    <li>
+      <a href="/v2/guide/team.html" class="sidebar-link">认识团队</a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="content guide with-sidebar components-registration-guide">
+  
+    
+      <!--<div id="ad">
+  <script>
+    (function () {
+      var s = document.createElement('script')
+      s.setAttribute('async', '')
+      s.src = '//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=vuejs'
+      s.id = '_carbonads_js'
+      document.getElementById('ad').appendChild(s)
+    })()
+  </script>
+</div>
+-->
+    
+  
+  
+    <h1>组件注册</h1>
+  
+  
+    <blockquote>
+<p>本页面会假定你已经阅读过 <a href="components.html">组件基础</a>。如果你还不熟悉组件，请先阅读组件基础后再阅读本页面。</p>
+</blockquote>
+<h2 id="组件名称"><a href="#组件名称" class="headerlink" title="组件名称"></a>组件名称</h2><p>在注册一个组件时，通常会给定一个名称。例如，在迄今为止我们所见过的全局注册中：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Vue.component(<span class="string">'my-component-name'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p><code>Vue.component</code> 的第一个参数，是组件的名称。</p>
+<p>你传给组件的名称，可能取决于将来使用它的位置。（不同于模板字符串或 <a href="single-file-components.html">单文件组件</a>，）当直接在 DOM 中使用组件时，我们强烈推荐你的自定义标签名称遵循 <a href="https://www.w3.org/TR/custom-elements/#concepts" target="_blank" rel="noopener">W3C 规则</a>。这有助于避免你的组件注册名称，与现有和未来的 HTML 元素名称产生冲突。</p>
+<p>你可以在 <a href="../style-guide/#Base-component-names-strongly-recommended">风格指南</a> 中，看到关于组件名称的推荐用法。</p>
+<h3 id="命名方案"><a href="#命名方案" class="headerlink" title="命名方案"></a>命名方案</h3><p>可以通过两种可选方式，定义组件名称：</p>
+<h4 id="串联式命名-kebab-case"><a href="#串联式命名-kebab-case" class="headerlink" title="串联式命名(kebab-case)"></a>串联式命名(kebab-case)</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Vue.component(<span class="string">'my-component-name'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p>使用串联式命名(kebab-case)定义一个组件，在引用其自定义元素时，你必须也使用串联式命名(kebab-case)，例如 <code>&lt;my-component-name&gt;</code>。</p>
+<h4 id="Pascal-式命名-PascalCase"><a href="#Pascal-式命名-PascalCase" class="headerlink" title="Pascal 式命名(PascalCase)"></a>Pascal 式命名(PascalCase)</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Vue.component(<span class="string">'MyComponentName'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p>使用 Pascal 式命名(PascalCase)定义一个组件，在引用其自定义元素时，两种方式都可以使用。也就是说 <code>&lt;my-component-name&gt;</code> 和 <code>&lt;MyComponentName&gt;</code> 都是可以接受的。然而要注意，直接在 DOM 中（即，非字符串模板）引用自定义元素，串联式命名(kebab-case)是唯一有效的命名方式。</p>
+<h2 id="全局注册方式-global-registration"><a href="#全局注册方式-global-registration" class="headerlink" title="全局注册方式(global registration)"></a>全局注册方式(global registration)</h2><p>到目前为止，我们只是用到 <code>Vue.component</code> 来创建组件：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Vue.component(<span class="string">'my-component-name'</span>, &#123;</span><br><span class="line">  <span class="comment">// ... options ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这些组件都是<strong>全局注册</strong>。也就是说，全局注册的组件，可以在之后（通过 <code>new Vue</code>）创建的 Vue 根实例的模板中引用。例如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Vue.component(<span class="string">'component-a'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br><span class="line">Vue.component(<span class="string">'component-b'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br><span class="line">Vue.component(<span class="string">'component-c'</span>, &#123; <span class="comment">/* ... */</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123; <span class="attr">el</span>: <span class="string">'#app'</span> &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">component-a</span>&gt;</span><span class="tag">&lt;/<span class="name">component-a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">component-b</span>&gt;</span><span class="tag">&lt;/<span class="name">component-b</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">component-c</span>&gt;</span><span class="tag">&lt;/<span class="name">component-c</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这甚至可以应用于所有子组件，这意味着，这三个组件还可以在每个其他组件<em>内部</em>使用。</p>
+<h2 id="局部注册方式-local-registration"><a href="#局部注册方式-local-registration" class="headerlink" title="局部注册方式(local registration)"></a>局部注册方式(local registration)</h2><p>全局注册方式并不是很合适。例如，如果你使用一个类似 webpack 的模块构建系统，全局注册所有组件，意味着就算你不引用某个组件，它仍然会打包到最终的构建 bundle 中。这会增加 JavaScript 的体积，让用户下载多余的代码。</p>
+<p>在下面这些示例中，可以将你的组件定义为纯 JavaScript 对象：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentA = &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"><span class="keyword">var</span> ComponentB = &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"><span class="keyword">var</span> ComponentC = &#123; <span class="comment">/* ... */</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>然后，在 <code>components</code> 选项中，定义你需要用到的组件：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span></span><br><span class="line">  components: &#123;</span><br><span class="line">    <span class="string">'component-a'</span>: ComponentA,</span><br><span class="line">    <span class="string">'component-b'</span>: ComponentB</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>对于 <code>components</code> 对象的每个属性，对象的 key 是自定义元素的名称，而 value 包含着组件的选项对象。</p>
+<p>注意，<strong>局部注册的组件在子组件中<em>无法访问</em></strong>。例如，如果你想要 在 <code>ComponentB</code> 中访问 <code>ComponentA</code>，你必须使用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentA = &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ComponentB = &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    <span class="string">'component-a'</span>: ComponentA</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者，如果使用 ES2015 模块（例如，通过 Babel 和 webpack 进行转译），则看起来可能类似这样：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ComponentA <span class="keyword">from</span> <span class="string">'./ComponentA.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    ComponentA</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，在 ES2015+ 中，在一个对象放置类似 <code>ComponentA</code> 这样的变量名称，其实是 <code>ComponentA: ComponentA</code> 的简写形式，也就是说，变量的名称：</p>
+<ul>
+<li>既是在模板中引用的自定义元素的名称</li>
+<li>而且，也是包含组件选项对象的变量的引用名</li>
+</ul>
+<h2 id="模块系统"><a href="#模块系统" class="headerlink" title="模块系统"></a>模块系统</h2><p>如果你未使用 <code>import</code>/<code>require</code> 模块系统，你可以跳过这一部分。如果你用到模块系统，我们为你准备了一些特殊的指导和提示。</p>
+<h3 id="在模块系统中的局部注册方式"><a href="#在模块系统中的局部注册方式" class="headerlink" title="在模块系统中的局部注册方式"></a>在模块系统中的局部注册方式</h3><p>如果你还在阅读，那么你可能正在使用一个模块系统（例如，通过 Babel 和 webpack 进行转译）。在这种场景中，我们推荐你创建一个 <code>components</code> 目录，每个组件中都定义在文件中。</p>
+<p>然后，在局部注册这些组件之前，你需要预先导入每个需要用到的组件。例如，在假想的 <code>ComponentB.js</code> 或 <code>ComponentB.vue</code> 文件中：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ComponentA <span class="keyword">from</span> <span class="string">'./ComponentA'</span></span><br><span class="line"><span class="keyword">import</span> ComponentC <span class="keyword">from</span> <span class="string">'./ComponentC'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    ComponentA,</span><br><span class="line">    ComponentC</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，可以在 <code>ComponentB</code> 组件的模板内部引用 <code>ComponentA</code> 和 <code>ComponentC</code> 这两个组件。</p>
+<h3 id="自动化全局注册基本组件"><a href="#自动化全局注册基本组件" class="headerlink" title="自动化全局注册基本组件"></a>自动化全局注册基本组件</h3><p>许多相对通用的组件，例如，内部可能只含有一个 input 或 button 元素。我们有时将这些组件归为 <a href="../style-guide/#%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E5%90%8D-%E5%BC%BA%E7%83%88%E6%8E%A8%E8%8D%90">基础组件</a>，并且往往在其他组件中频繁使用这类组件。</p>
+<p>结果就是，许多组件可能会列出一个很长的基础组件清单，然后在 components 选项中进行逐个引用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> BaseButton <span class="keyword">from</span> <span class="string">'./BaseButton.vue'</span></span><br><span class="line"><span class="keyword">import</span> BaseIcon <span class="keyword">from</span> <span class="string">'./BaseIcon.vue'</span></span><br><span class="line"><span class="keyword">import</span> BaseInput <span class="keyword">from</span> <span class="string">'./BaseInput.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    BaseButton,</span><br><span class="line">    BaseIcon,</span><br><span class="line">    BaseInput</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这么麻烦的操作，也只是为了在模板中，支持相对很少用到的组件标签：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">BaseInput</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-model</span>=<span class="string">"searchText"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">keydown.enter</span>=<span class="string">"search"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">BaseButton</span> @<span class="attr">click</span>=<span class="string">"search"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">BaseIcon</span> <span class="attr">name</span>=<span class="string">"search"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">BaseButton</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>幸运的是，如果你正在使用 webpack（或者内置 webpack 的 <a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">Vue CLI 3+</a>），你就可以只通过 <code>require.context</code> 来全局注册这些常用基础组件。在你的应用程序入口文件（例如 <code>src/main.js</code>）中，你可能会通过全局方式导入基础组件，下面是一些示例代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> upperFirst <span class="keyword">from</span> <span class="string">'lodash/upperFirst'</span></span><br><span class="line"><span class="keyword">import</span> camelCase <span class="keyword">from</span> <span class="string">'lodash/camelCase'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> requireComponent = <span class="built_in">require</span>.context(</span><br><span class="line">  <span class="comment">// components 文件夹的相对路径</span></span><br><span class="line">  <span class="string">'./components'</span>,</span><br><span class="line">  <span class="comment">// 是否查找子文件夹</span></span><br><span class="line">  <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// 用于匹配组件文件名的正则表达式</span></span><br><span class="line">  /Base[A-Z]\w+\.(vue|js)$/</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">requireComponent.keys().forEach(<span class="function"><span class="params">fileName</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 获取组件配置</span></span><br><span class="line">  <span class="keyword">const</span> componentConfig = requireComponent(fileName)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取得组件的 Pascal 式命名</span></span><br><span class="line">  <span class="keyword">const</span> componentName = upperFirst(</span><br><span class="line">    camelCase(</span><br><span class="line">      <span class="comment">// 将文件名前面的 `'./` 和扩展名剥离</span></span><br><span class="line">      fileName.replace(<span class="regexp">/^\.\/(.*)\.\w+$/</span>, <span class="string">'$1'</span>)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 以全局方式注册组件</span></span><br><span class="line">  Vue.component(</span><br><span class="line">    componentName,</span><br><span class="line">    <span class="comment">// 如果组件是通过 `export default` 导出，</span></span><br><span class="line">    <span class="comment">// 则在 `.default` 中，查找组件选项，</span></span><br><span class="line">    <span class="comment">// 否则回退至模块根对象中，查找组件选项</span></span><br><span class="line">    componentConfig.default || componentConfig</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>切记，<strong>全局注册方式必须在（通过 <code>new Vue</code> 创建的）Vue 根实例创建之前置入组件</strong>。这里是按照以上所述的，一个真实项目环境<a href="https://github.com/chrisvfritz/vue-enterprise-boilerplate/blob/master/src/components/_globals.js" target="_blank" rel="noopener">示例</a>.</p>
+<hr>
+<blockquote>
+<p>原文：<a href="http://vuejs.org/v2/guide/components-registration.html" target="_blank" rel="noopener">http://vuejs.org/v2/guide/components-registration.html</a></p>
+</blockquote>
+<hr>
+
+  
+  
+    <div class="guide-links">
+      
+      
+        <span>← <a href="/v2/guide/transitions.html">进入、离开和列表的过渡</a></span>
+      
+      
+      
+        <span style="float: right;"><a href="/v2/guide/components-props.html">props</a> →</span>
+      
+    </div>
+  
+  <div class="footer">
+      <script src="//m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+<div class="bsa-cpc"></div>
+<script>
+  (function(){
+    if(typeof _bsa !== 'undefined' && _bsa) {
+    _bsa.init('default', 'CKYD62QM', 'placement:vuejsorg', {
+      target: '.bsa-cpc',
+      align: 'horizontal',
+      disable_css: 'true'
+    });
+      }
+  })();
+</script>
+
+    发现错误？想参与编辑？
+    <a href="https://github.com/docschina/vuejs.org/blob/cn/src/v2/guide/components-registration.md" target="_blank">
+      在 GitHub 上编辑此页！
+    </a>
+  </div>
+</div>
+
+        
+      </div>
+      <script src="/js/smooth-scroll.min.js"></script>
+    
+
+    <!-- main custom script for sidebars, version selects etc. -->
+    <script src="/js/css.escape.js"></script>
+    <script src="/js/common.js"></script>
+
+    <!-- search -->
+    <link href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/search.css">
+    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" type="text/javascript"></script>
+    <script>
+    [
+      '#search-query-nav',
+      '#search-query-sidebar',
+      '#search-query-menu'
+    ].forEach(function (selector) {
+      if (!document.querySelector(selector)) return
+      // search index defaults to v2
+      docsearch({
+      apiKey: '528a52bb98fa94e699a32180b5e72cac',
+      indexName: 'vuefe',
+      inputSelector: selector,
+      debug: false
+      })
+    })
+    </script>
+
+    <!-- fastclick -->
+    <script src="//lib.baomitu.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      FastClick.attach(document.body)
+    }, false)
+    </script>
+  </body>
+</html>
